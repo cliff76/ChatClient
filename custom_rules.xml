@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="chat-custom" >
+    <target name="resolve-dependencies" description="retrieve dependencies with ivy">
+        <ivy:retrieve conf="binaries" pattern="libs/[artifact](-[classifier]).[ext]"/>
+        <property name="download.dir" location="bin/downloads"/>
+        <mkdir dir="${download.dir}"/>
+        <get src="http://chatter-bot-api.googlecode.com/files/chatter-bot-api.jar-1.3.zip" dest="${download.dir}"/>
+        <unzip src="${download.dir}/chatter-bot-api.jar-1.3.zip" dest="libs"/>
+    </target>
+    <target name="-pre-build" depends="resolve-dependencies"/>
+
+</project>

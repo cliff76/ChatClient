@@ -1,0 +1,9 @@
+<ivy-module version="2.0">
+    <info organisation="com.your.project" module="your-module" />
+    <configurations>
+        <conf name="binaries" description="binary jars" />
+    </configurations>
+    <dependencies>
+        <dependency org="org.robolectric" name="robolectric" rev="2.1.1" conf="binaries->default" />
+    </dependencies>
+</ivy-module>

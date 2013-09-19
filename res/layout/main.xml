@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:clickable="false">
+    <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="center">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username.prompt"
+                android:id="@+id/textView" android:layout_row="0" android:layout_column="0"
+                android:paddingRight="20dp"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userNameText" android:layout_row="0" android:layout_column="1" android:width="150dp"
+                android:text="cliff"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password.prompt"
+                android:id="@+id/textView1" android:layout_row="1" android:layout_column="0"
+                android:paddingRight="20dp"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="craig"
+                android:id="@+id/passwordText" android:layout_row="1" android:layout_column="1" android:width="150dp"
+                android:inputType="textPassword"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remember.me"
+                android:id="@+id/checkBox" android:layout_row="2" android:layout_column="1" android:checked="true"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:id="@+id/loginButton" android:layout_row="3" android:layout_column="1"
+                android:layout_gravity="right" android:onClick="onLogin"/>
+    </GridLayout>
+    <ImageView
+            android:layout_width="100dp"
+            android:layout_height="75dp"
+            android:id="@+id/imageView" android:layout_gravity="center_horizontal|top" android:src="@drawable/logo"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expect More!"
+            android:id="@+id/textView2" android:layout_gravity="center_horizontal|bottom" android:padding="5dp"/>
+</FrameLayout>
