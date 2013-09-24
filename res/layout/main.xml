@@ -51,4 +51,17 @@
             android:layout_height="wrap_content"
             android:text="Expect More!"
             android:id="@+id/textView2" android:layout_gravity="center_horizontal|bottom" android:padding="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/errorDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/errorMessageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </FrameLayout>

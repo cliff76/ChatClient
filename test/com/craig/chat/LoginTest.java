@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import com.craig.chat.ChatActivity;
-import com.craig.chat.LaunchActivity;
-import com.craig.chat.LoginController;
+import android.widget.TextView;
 import org.jmock.MockObjectTestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,10 +21,9 @@ import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
- * User: clcraig
+ * User: Clifton Craig
  * Date: 2/19/13
  * Time: 11:15 AM
- * To change this template use File | Settings | File Templates.
  */
 @RunWith(RobolectricTestRunner.class)
 public class LoginTest extends MockObjectTestCase {
@@ -34,6 +31,8 @@ public class LoginTest extends MockObjectTestCase {
     public static final String LOGIN_BUTTON = "loginButton";
     public static final String USER_NAME_TEXT = "userNameText";
     public static final String PASSWORD_TEXT = "passwordText";
+    public static final String ERROR_DIALOG = "errorDialog";
+    public static final String ERROR_MESSAGE_TEXT = "errorMessageText";
     private LaunchActivity activity;
     private Mock mock;
 
@@ -77,18 +76,66 @@ public class LoginTest extends MockObjectTestCase {
     @Test
     public void validLoginLaunchesChatActivity() throws Exception {
         //Given...
-        /*our activity*/ shouldAcceptLoginController();
-        /*a */mock/*that*/.stubs().method("login").with(ANYTHING, ANYTHING)/*and*/.will(returnValue(true));
+
         //When we..
+        activity.setLoginController(anAlwaysValidLoginController());
         activity.findViewById(findIdForStringIdentifier(LOGIN_BUTTON)).performClick();
         //Then we should...
         assertThat(nextStartedActivity(activity).getComponent().getClassName(), eq(ChatActivity.class.getName()));
     }
 
+    @Test
+    public void anInvalidLoginPresentsErrorDialog() throws Exception {
+        /*Given our...*/ activityHasAnErrorDialogThatDoesNotShow();
+
+        //When we..
+        /*ask our*/activity/*to*/.setLoginController(/*to*/anAlwaysInValidLoginController());
+        //And we...
+        /*ask our*/activity/*to*/
+                .findViewById(/*after we*/findIdForStringIdentifier(LOGIN_BUTTON))/*and*/.performClick();//on the button
+        //Then...
+        View errorDialog = activity.findViewById(findIdForStringIdentifier(ERROR_DIALOG));
+        assertTrue("The error dialog should be visible", errorDialog.getVisibility()==View.VISIBLE);
+        //And...
+        assertFalse("The error message SHOULD include error text",
+                ((TextView) errorDialog.findViewById(findIdForStringIdentifier(ERROR_MESSAGE_TEXT)))
+                        .getText().equals(""));
+    }
+
+    @Test
+    public void activityHasAnErrorDialogThatDoesNotShow() {
+        //When we look for our error dialog...
+        View errorDialog = activity.findViewById(findIdForStringIdentifier(ERROR_DIALOG));
+        //Then...
+        assertTrue("Error dialog should not be visible", errorDialog.getVisibility()==View.GONE);
+        //And we find our errorMessage text view...
+        View errorMessage = errorDialog.findViewById(findIdForStringIdentifier(ERROR_MESSAGE_TEXT));
+        //And...
+        assertTrue("The errorMessage should be a TextView", errorMessage instanceof TextView);
+        //And...
+        assertTrue("The error message should not currently include any error text",
+                ((TextView) errorMessage).getText().equals(""));
+    }
+
+    private LoginController anAlwaysValidLoginController() {
+        return aLoginControllerThatReturnsConstant(true);
+    }
+
+    private LoginController anAlwaysInValidLoginController() {
+        return aLoginControllerThatReturnsConstant(false);
+    }
+
+    private LoginController aLoginControllerThatReturnsConstant(boolean result) {
+    /*a */
+        mock/*that*/.stubs().method("login").with(ANYTHING, ANYTHING)
+        /*and*/.will(/*always*/returnValue(result));
+        return (LoginController) mock.proxy();
+    }
+
     private ShadowIntent nextStartedActivity(Activity anActivity) {
         ShadowActivity shadowActivity = shadowOf(anActivity);
         Intent startedIntent = shadowActivity.getNextStartedActivity();
-        assertNotNull("Should have started a new intent.", startedIntent);
+        assertNotNull(anActivity.getClass().getName() + " should DID NOT start a new intent.", startedIntent);
         return shadowOf(startedIntent);
     }
 
