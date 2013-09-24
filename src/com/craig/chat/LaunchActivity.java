@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class LaunchActivity extends Activity {
     private LoginController loginController;
@@ -27,6 +28,11 @@ public class LaunchActivity extends Activity {
         String password = ((EditText) findViewById(R.id.passwordText)).getText().toString();
         if (this.loginController.login(userName, password)) {
             startActivityForClass(ChatActivity.class);
+        } else {
+            View errorDialog = findViewById(R.id.errorDialog);
+            errorDialog.setVisibility(View.VISIBLE);
+            ((TextView) errorDialog.findViewById(R.id.errorMessageText))
+                    .setText("Invalid login credentials! Try again.");
         }
     }
 
