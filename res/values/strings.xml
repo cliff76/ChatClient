@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SkRype</string>
+    <string name="app_name">Chat Client</string>
     <string name="username.prompt">User:</string>
     <string name="password.prompt">Password:</string>
     <string name="remember.me">Remember Me?</string>
