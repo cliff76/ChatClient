@@ -1,5 +1,6 @@
 bin
 gen
 .idea
-*.iml
+libs/*.jar
 out
+atlassian-ide-plugin.xml
